@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "resetdb": "knex migrate:rollback && migrate:latest"
   },
   "repository": {
     "type": "git",
