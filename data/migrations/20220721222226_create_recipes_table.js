@@ -19,9 +19,30 @@ exports.up = function(knex) {
             .inTable('recipes')
             .onDelete('CASCADE')
     })
+    .createTable('ingredients', tbl => {
+        tbl.increments('ingredient_id');
+        tbl.string('ingredient_name', 200)
+            .unique()
+    })
+    .createTable('step_ingredients', tbl => {
+        tbl.integer('step_id')
+            .unsigned()
+            .notNullable()
+            .references('step_id')
+            .inTable('steps')
+        tbl.integer('ingredient_id')
+            .unsigned()
+            .references('ingredient_id')
+            .inTable('ingredients')
+        tbl.decimal('quantity')
+            .unsigned()
+    })
 };
 
 exports.down = function(knex) {
-return knex.schema.dropTableIfExists('recipes')
+return knex.schema
+    .dropTableIfExists('step_ingredients')
+    .dropTableIfExists('ingredients')
     .dropTableIfExists('steps')
+    .dropTableIfExists('recipes')
 };

@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:recipe_id', validateRecipeId, (req, res, next) => {
     try {
-        res.json(req.recipe);
+        res.json(req.recipe)
     } catch(err) {
         next(err)
     }
