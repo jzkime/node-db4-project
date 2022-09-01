@@ -6,6 +6,7 @@ const { validateRecipeId, validateRecipe, validateUniqueName } = require('./reci
 router.get('/', (req, res, next) => {
     recMod.getAllRec()
         .then(rec => res.json(rec))
+        .catch(next)
 })
 
 router.get('/:recipe_id', validateRecipeId, (req, res, next) => {

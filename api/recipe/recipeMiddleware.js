@@ -19,7 +19,7 @@ module.exports = {
     },
     async validateUniqueName(req, res, next) {
         const [obj] = await recMod.findName(req.recipe.recipe_name);
-        if(obj.recipe_id) return next({status: 400, message: 'name already in use'})
+        if(obj?.recipe_id) return next({status: 400, message: 'name already in use'})
         else next()
     }
 }
