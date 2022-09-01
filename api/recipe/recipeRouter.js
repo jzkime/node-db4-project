@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const recMod = require('./recipeModel')
-const { validateRecipeId } = require('./recipeMiddleware')
+const { validateRecipeId, validateRecipe, validateUniqueName } = require('./recipeMiddleware')
 
 router.get('/', (req, res, next) => {
     recMod.getAllRec()
@@ -14,6 +14,12 @@ router.get('/:recipe_id', validateRecipeId, (req, res, next) => {
     } catch(err) {
         next(err)
     }
+})
+
+router.post('/', validateRecipe, validateUniqueName, (req, res, next) => {
+    recMod.create(req.recipe)
+    .then(re => res.json(re))
+    .catch(next)
 })
 
 module.exports = router;

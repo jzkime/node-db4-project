@@ -4,7 +4,20 @@ module.exports = {
         return db('recipes')
     },
 
+    create(r) {
+        return db('recipes')
+            .insert(r)
+            .then(async i => {
+                const re = await this.getRecipeById(i[0])
+                return {...re, recipe_id: i[0]};
+            })
+    },
 
+    findName(name) {
+        return db('recipes')
+            .where({recipe_name: name})
+            .then(i => i)
+    },
     async getRecipeById(rec_id) {
         const arr = await db('recipes as re')
             .leftJoin('steps as st', 'st.recipe_id', 're.recipe_id')
